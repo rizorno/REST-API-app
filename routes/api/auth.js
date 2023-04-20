@@ -12,7 +12,16 @@ const router = express.Router();
 
 const { registerLimit } = require("../../helpers/rateLimiter");
 
-router.post("/register", registerLimit, validateBody(schemas.registerSchema), ctrl.register);
+router.post(
+  "/register",
+  registerLimit,
+  validateBody(schemas.registerSchema),
+  ctrl.register
+);
+
+router.get("/verify/:verificationToken", ctrl.verifyEmail);
+
+router.post("/verify", validateBody(schemas.verifySchema), ctrl.resendEmail);
 
 router.post("/login", validateBody(schemas.loginSchema), ctrl.login);
 
